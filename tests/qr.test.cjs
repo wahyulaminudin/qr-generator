@@ -87,7 +87,7 @@ function app(page, hash = '', href = 'https://example.github.io/qr/index.html', 
   vm.runInContext(fs.readFileSync(require.resolve('../script.js'), 'utf8'), context);
   return { node, bound, photo };
 }
-test('generator blocks local PNG, keeps local preview, and creates compact public destination', () => {
+test('compact QR decodes to the shared page with complete text and no photo or missing file dependency', () => {
   const local = app('generator', '', 'file:///E:/Project/QR_GENERATOR/index.html');
   assert.equal(local.node('#download').disabled, true);
   assert.ok(local.node('#scan-link').href.startsWith('file:'));
@@ -98,8 +98,18 @@ test('generator blocks local PNG, keeps local preview, and creates compact publi
   online.node('input[name="qr-mode"]:checked').value = 'compact';
   online.node('#profile-form').reportValidity = () => true;
   online.node('#profile-form').listeners.submit({ preventDefault() {} });
-  assert.match(decode(online.node('#qr-canvas')), /\/qr\/profiles\/p-[a-f0-9]+\.html$/);
-  assert.equal(online.node('#download-profile').disabled, false);
+  const compactURL = new URL(decode(online.node('#qr-canvas')));
+  assert.equal(compactURL.pathname, '/qr/template.html');
+  assert.ok(compactURL.hash.startsWith('#v3.'));
+  assert.equal(compactURL.href, online.node('#scan-link').href);
+  assert.equal(online.node('#download').disabled, false);
+  const scan = app('profile', compactURL.hash);
+  assert.deepEqual(scan.bound.map(node => node.textContent).slice(0, 5), values.slice(0, 5));
+  assert.equal(scan.node('#scan-profile').hidden, false);
+  assert.equal(scan.photo[0].hidden, true, 'no portrait or placeholder on scan');
+  assert.equal(online.photo[0].hidden, true, 'preview matches scan');
+  assert.equal(online.node('#photo').disabled, true);
+  assert.equal(app('profile', compactURL.hash + 'AAAA').node('#scan-error').hidden, false, 'v3 rejects photo data');
 });
 test('complex real JPEG and PNG photos produce usable mini and clear profile variants', async () => {
   const canvas = createCanvas(600, 450);
@@ -140,8 +150,17 @@ test('complex real JPEG and PNG photos produce usable mini and clear profile var
     assert.equal(generator.node('#download').disabled, false);
     generator.node('input[name="qr-mode"]:checked').value = 'compact';
     generator.node('#profile-form').listeners.submit({ preventDefault() {} });
-    assert.ok(generator.node('#scan-link').href.includes('#v2.'));
-    assert.equal(app('profile', new URL(generator.node('#scan-link').href).hash).photo[0].src, result.profile.encoded);
+    const compactURL = new URL(generator.node('#scan-link').href);
+    assert.ok(compactURL.hash.startsWith('#v3.'));
+    assert.equal(compactURL.hash.split('.')[2], '');
+    assert.equal(app('profile', compactURL.hash).photo[0].hidden, true, 'uploaded photo is omitted from compact scans');
+    assert.ok(compactURL.href.length < text.length);
+    assert.equal(decode(generator.node('#qr-canvas')), compactURL.href);
+    generator.node('input[name="qr-mode"]:checked').value = 'direct';
+    generator.node('#profile-form').listeners.submit({ preventDefault() {} });
+    const restored = app('profile', new URL(generator.node('#scan-link').href).hash);
+    assert.equal(restored.photo[0].src, result.inline.encoded);
+    assert.equal(restored.photo[0].hidden, false, 'switching back restores photo without another upload');
   }
 });
 test('scan page recovers exact Unicode fields, old links, invalid data, and expired dates', () => {
@@ -163,6 +182,5 @@ test('missing profile and cleared form cannot leave a fabricated profile or old 
   assert.equal(generator.node('#name').value, '');
   assert.equal(generator.node('#employeeId').value, '');
   assert.equal(generator.node('#download').disabled, true);
-  assert.equal(generator.node('#download-profile').disabled, true);
   assert.equal(generator.node('#scan-link').href, undefined);
 });

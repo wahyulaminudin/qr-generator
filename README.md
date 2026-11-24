@@ -13,11 +13,11 @@ Buka `index.html` langsung di browser modern. Isi nama, Employee ID, jabatan, de
 ## Memilih mode QR
 
 - **Langsung** (default): seluruh data dan foto mini dibawa dalam tautan QR. Foto otomatis diperkecil menjadi 8–80 px dengan batas 900 byte. Tidak perlu mengunggah file profil terpisah. Semakin banyak data, semakin rapat pola QR. Gunakan tombol **Perbesar untuk dipindai** atau PNG asli saat memindai QR berfoto.
-- **Ringkas**: QR hanya membawa URL singkat ke file profil statis. Foto dapat mencapai 256 × 256 px (maksimal 24 KB), sehingga lebih jelas dan tidak dibatasi kapasitas QR. Klik **Unduh file profil HTML**, taruh file tersebut di folder `profiles/`, lalu unggah bersama proyek ke GitHub Pages. Setelah file tersedia online, unduh dan bagikan PNG QR. File profil meneruskan pengunjung ke `template.html` dengan data dan foto yang sama. Tidak menggunakan database atau pemendek URL pihak ketiga.
+- **Ringkas**: semua data teks dibawa langsung dalam QR menuju `template.html#v3.<data>.`. Hasil scan menampilkan nama, Employee ID, jabatan, departemen, area, serta masa berlaku **tanpa foto dan tanpa avatar pengganti**. Cukup isi formulir, pilih Ringkas, lalu unduh QR. Tidak perlu mengunggah HTML, membuat file per karyawan, atau memakai database.
 
-Unggahan JPG, PNG, dan WebP maksimal 5 MB diproses secara adaptif. Aplikasi menyiapkan versi mini serta versi profil dari foto yang sama. Jika browser tidak dapat menghasilkan foto mini yang cukup kecil, foto tetap diterima dan mode Ringkas dipilih otomatis. Berpindah mode tidak mengharuskan unggah ulang. Pratinjau menampilkan versi foto yang sesuai dengan mode pilihan.
+Unggahan JPG, PNG, dan WebP maksimal 5 MB diproses secara adaptif untuk mode Langsung. Foto yang sudah diunggah diabaikan pada mode Ringkas dan dapat dipakai kembali saat beralih ke mode Langsung. Pratinjau mengikuti hasil scan. Unggah foto dinonaktifkan selama mode Ringkas dipilih.
 
-Pada mode ringkas, **Lihat halaman hasil scan** tetap membuka data langsung untuk pratinjau; tombol ini bukan bukti file profil telah dipublikasikan. Coba alamat di bagian **Alamat yang dibawa QR** setelah unggah untuk memastikan tidak 404. Perubahan profil menghasilkan nama file baru; unggah file baru tersebut sebelum membagikan QR baru. File lama dan QR lama tetap berfungsi selama file lama dipertahankan.
+**Lihat halaman hasil scan** membuka alamat yang persis sama dengan isi QR. Mode Ringkas baru tidak bergantung pada folder `profiles/`, sehingga tidak menghasilkan 404 karena file karyawan belum diunggah. QR Ringkas versi lama yang mengarah ke `/profiles/p-....html` perlu dibuat ulang jika file tersebut tidak pernah dipublikasikan. Data dari nama file lama tidak dapat dipulihkan. Tautan v1/v2 dan file profil lama yang sudah tersedia tetap didukung.
 
 Jika ingin memakai server lokal dan Node.js sudah tersedia:
 
@@ -29,7 +29,7 @@ Buka `http://127.0.0.1:4173`. Server ini hanya alat pengembangan untuk menyajika
 
 ## GitHub Pages
 
-1. Unggah isi folder proyek ke repository GitHub, termasuk `assets`, `index.html`, `template.html`, `script.js`, `qr-tools.js`, `photo-tools.js`, `style.css`, `.nojekyll`, dan folder `profiles/` jika menggunakan mode ringkas. Folder `node_modules`, `tests`, serta `output` tidak diperlukan untuk hosting.
+1. Unggah isi folder proyek ke repository GitHub, termasuk `assets`, `index.html`, `template.html`, `script.js`, `qr-tools.js`, `photo-tools.js`, `style.css`, dan `.nojekyll`. Pertahankan folder `profiles/` jika ada file profil lama yang sudah dibagikan. Folder `node_modules`, `tests`, serta `output` tidak diperlukan untuk hosting.
 2. Buka **Settings → Pages**, pilih **Deploy from a branch**, pilih branch utama dan folder **/(root)**, lalu simpan.
 3. Setelah penerbitan selesai, buka alamat Pages yang ditampilkan GitHub (contoh `https://username.github.io/qr-generator/`).
 4. Buat dan unduh QR dari alamat publik tersebut. Halaman hasil scan otomatis menggunakan alamat publik yang sama dan mendukung repository dalam subfolder.
@@ -40,11 +40,11 @@ Jika membuat QR dari file lokal sebelum publikasi, buka **Pengaturan tautan QR**
 
 ## Cara data dibawa
 
-- Data teks UTF-8 dikodekan sebagai Base64URL dalam fragment `template.html#v1.<data>.<foto>` untuk mode Langsung, atau `#v2.<data>.<foto>` pada file profil mode Ringkas.
-- Foto di-crop persegi di bagian tengah, lalu dikompres WebP secara adaptif. Versi mini maksimal 900 byte; versi profil maksimal 24 KB. Tautan v1 lama dengan foto hingga 1.050 byte tetap didukung. Versi v2 dibatasi 38.000 karakter dan tidak dimasukkan ke pola QR secara langsung. Placeholder avatar netral dipakai bila foto tidak diunggah.
+- Data teks UTF-8 dikodekan sebagai Base64URL dalam fragment `template.html#v1.<data>.<foto>` untuk mode Langsung, atau `#v3.<data>.` untuk mode Ringkas tanpa foto. Format v2 lama tetap dapat dibuka.
+- Foto untuk mode Langsung di-crop persegi dan dikompres WebP maksimal 900 byte. Tautan v1 lama dengan foto hingga 1.050 byte dan v2 lama dengan foto hingga 24 KB tetap didukung. Mode Ringkas v3 tidak membawa foto serta menyembunyikan seluruh area foto pada hasil scan. Avatar netral hanya dipakai pada mode Langsung bila foto tidak diunggah.
 - URL dibatasi 2.300 byte. Isian atau URL yang terlalu panjang akan menonaktifkan unduhan dengan pesan agar data dipersingkat. QR memakai koreksi kesalahan M dan quiet zone minimal empat modul.
 - QR berisi snapshot. Mengubah formulir tidak mengubah QR lama; unduh QR baru setelah mengedit.
-- Tidak ada penyimpanan di localStorage, cookie, analytics, atau request ke layanan eksternal. Data formulir hilang saat halaman dimuat ulang. Pada mode ringkas, file HTML yang diunduh dan diunggah berisi snapshot data profil. Browser/hosting dapat menyimpan riwayat URL atau log akses halaman; fragment tidak dikirim dalam request HTTP.
+- Tidak ada penyimpanan di localStorage, cookie, analytics, atau request ke layanan eksternal. Data formulir hilang saat halaman dimuat ulang. Data kedua mode ikut dalam tautan QR. Browser/hosting dapat menyimpan riwayat URL atau log akses halaman; fragment tidak dikirim dalam request HTTP.
 - Tautan bukan enkripsi atau tanda tangan digital. Pemilik QR dapat membaca dan memodifikasi seluruh data. Tanggal berlaku berasal dari isian pembuat profil, bukan hasil pemeriksaan perusahaan.
 - Halaman scan memvalidasi format dan ukuran payload, menggunakan `textContent` untuk data teks, dan hanya menerima foto WebP inline. Tautan rusak menampilkan pesan kesalahan; halaman tanpa payload menampilkan status profil belum tersedia.
 
@@ -56,8 +56,8 @@ template.html         Halaman hasil scan responsif
 style.css             Tema corporate navy dan electric blue
 script.js             Validasi, codec URL, optimasi foto, rendering QR
 qr-tools.js           Renderer piksel tajam dan ekspor file profil statis
-photo-tools.js        Optimasi foto adaptif untuk dua mode QR
-profiles/             File HTML profil untuk mode QR ringkas
+photo-tools.js        Optimasi foto adaptif untuk mode Langsung
+profiles/             File profil lama (opsional, kompatibilitas)
 assets/logo-web.png   Versi logo yang diperkecil untuk halaman
 assets/first med.png  Aset logo asli (dipertahankan)
 assets/avatar.svg     Placeholder foto profil netral
