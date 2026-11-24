@@ -3,81 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Generator identitas karyawan First Media. Isi rincian kepegawaian, tinjau kartu digital, dan unduh QR Code.">
-  <meta name="theme-color" content="#0b2445">
+  <meta name="robots" content="noindex,nofollow">
   <meta name="referrer" content="no-referrer">
-  <title>Generator Identitas Karyawan — First Media</title>
+  <meta name="theme-color" content="#0b2445">
+  <title>Login Admin — Employee Identity</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=4">
-  <script src="assets/vendor/qrcode.js" defer></script>
-  <script src="qr-tools.js" defer></script>
-  <script src="photo-tools.js" defer></script>
-  <script src="script.js?v=5" defer></script>
+  <link rel="stylesheet" href="style.css?v=5">
+  <style>
+    body{min-height:100vh;display:grid;place-items:center;padding:24px;background:#092542 url('assets/skyline.svg') center bottom/cover no-repeat}
+    .login-card{width:min(100%,440px);padding:36px;border-radius:16px;background:#fff;border:1px solid #dfe7f1;box-shadow:0 24px 80px #0003}
+    .login-card>img{width:105px;margin-bottom:26px}.login-card h1{font-size:30px}
+    .login-card>p{margin:16px 0;color:#687b93;line-height:1.7}.login-card .button{display:block;text-align:center;margin-top:24px}
+    .login-card small{display:block;margin-top:24px;color:#687b93;line-height:1.7}
+  </style>
 </head>
-<body data-page="generator" class="enterprise-workspace">
-  <a class="skip-link" href="#main">Langsung ke generator</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="First Media, generator identitas karyawan"><img src="assets/logo-web.png" alt="First Media" width="105" height="48"><span class="brand-divider"></span><span><strong>FIRST MEDIA</strong><small>EMPLOYEE IDENTITY</small></span></a>
-      <nav aria-label="Navigasi utama"><a class="nav-active" href="index.html" aria-current="page">Generator</a><button class="nav-link" type="button" data-guide>Panduan<span class="help-icon" aria-hidden="true">?</span></button></nav>
-      <span class="workspace-badge"><svg class="icon"><use href="assets/icons.svg#signal"/></svg>Identitas Karyawan</span>
-    </div>
-  </header>
-  <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-copy"><p class="eyebrow"><span></span> ALWAYS FIRST • PT LINK NET TBK</p><h1>Identitas digital.<br>Informasi <span>dalam satu scan.</span></h1><p>Lengkapi rincian kepegawaian dan penugasan.<br>Bagikan kartu identitas digital melalui QR Code.</p><div class="hero-product-label">FIRST MEDIA <span>EMPLOYEE IDENTITY</span></div></div>
-      <img class="hero-skyline" src="assets/skyline.svg" alt="Ilustrasi skyline perkotaan dengan koneksi digital" width="720" height="280">
-      <span class="hero-caption">PEOPLE <i></i> NETWORK <i></i> CONNECTION</span>
-    </div>
-  </section>
-  <main class="container workspace" id="main">
-    <div class="workspace-heading"><div><p class="section-kicker">GENERATOR / IDENTITAS KARYAWAN</p><h2>Buat identitas karyawan</h2><p>Lengkapi rincian kepegawaian, tinjau kartu, dan unduh QR Code.</p></div><span class="private-note"><svg class="icon"><use href="assets/icons.svg#lock"/></svg>Pemrosesan di perangkat Anda</span></div>
-    <div class="workspace-steps" aria-label="Alur pembuatan profil"><span class="current-step"><svg class="icon"><use href="assets/icons.svg#person"/></svg>Rincian kepegawaian</span><span><svg class="icon"><use href="assets/icons.svg#qr"/></svg>Pratinjau & QR Code</span><span><svg class="icon"><use href="assets/icons.svg#download"/></svg>Ekspor & bagikan</span></div>
-    <div class="workspace-grid">
-      <section class="panel form-panel" aria-labelledby="form-title">
-        <div class="panel-heading"><div class="heading-icon"><svg class="icon"><use href="assets/icons.svg#person"/></svg></div><h3 id="form-title">Rincian kepegawaian</h3><span class="tag">PROFIL BARU</span></div>
-        <form id="profile-form">
-          <div class="photo-upload"><img id="upload-preview" src="assets/avatar.svg" alt="Placeholder foto profil" width="68" height="68"><div class="upload-copy"><label for="photo">Foto profil</label><p>JPG, PNG, atau WebP · Maks. 5 MB</p><span id="photo-note">Foto opsional pada mode Langsung. Mode Ringkas tanpa foto.</span></div><div class="upload-actions"><label class="button button-small button-outline" for="photo">Pilih foto</label><input id="photo" type="file" accept="image/jpeg,image/png,image/webp" class="file-input"><button id="remove-photo" type="button" class="text-button" hidden>Hapus foto</button></div></div>
-          <p id="photo-error" class="field-error" role="status"></p>
-          <div class="fields-grid">
-            <div class="field"><label for="name">Nama Karyawan <span>*</span></label><input id="name" name="name" maxlength="60" autocomplete="off" required placeholder="Masukkan nama lengkap"><small>Nama yang akan ditampilkan pada profil.</small></div>
-            <div class="field"><label for="employeeId">Nomor Induk Karyawan (NIK) <span>*</span></label><input id="employeeId" name="employeeId" maxlength="32" autocomplete="off" required placeholder="Masukkan nomor induk karyawan"><small>Nomor internal karyawan, bukan NIK KTP.</small></div>
-            <div class="field"><label for="role">Jabatan <span>*</span></label><input id="role" name="role" maxlength="60" required placeholder="Masukkan jabatan"></div>
-            <div class="field"><label for="department">Departemen / Divisi <span>*</span></label><input id="department" name="department" maxlength="60" required placeholder="Masukkan departemen atau divisi"></div>
-            <div class="field"><label for="area">Wilayah Penugasan <span>*</span></label><div class="input-icon"><svg class="icon"><use href="assets/icons.svg#pin"/></svg><input id="area" name="area" maxlength="60" required placeholder="Masukkan wilayah penugasan"></div></div>
-            <div class="field"><label for="expiry">Masa Berlaku Kartu <span>*</span></label><input id="expiry" name="expiry" type="date" min="2000-01-01" max="2100-12-31" required></div>
-          </div>
-          <details class="url-settings"><summary><svg class="icon"><use href="assets/icons.svg#link"/></svg>Pengaturan tautan QR <span>Opsional</span></summary><div class="field"><label for="base-url">URL publik aplikasi</label><input id="base-url" type="url" placeholder="https://employeeinformation.github.io/" aria-describedby="base-help"><small id="base-help">Otomatis memakai alamat halaman ini. Isi URL GitHub Pages jika membuat QR dari file lokal. QR lokal hanya dapat dibuka pada perangkat ini.</small></div></details>
-          <div class="profile-note"><svg class="icon"><use href="assets/icons.svg#info"/></svg><p><strong>Periksa informasi sebelum dibagikan.</strong> Data yang Anda isi akan tersedia bagi siapa pun yang memiliki QR Code atau tautan profil.</p></div>
-          <div class="form-footer"><span><span class="required-mark">*</span> Wajib diisi</span><button class="text-button reset-button" type="button" id="reset"><svg class="icon"><use href="assets/icons.svg#reset"/></svg>Kosongkan formulir</button></div>
-        </form>
-      </section>
-      <aside class="preview-panel" aria-labelledby="preview-title">
-        <div class="preview-heading"><h3 id="preview-title">Pratinjau langsung</h3><span><span class="live-dot"></span>LIVE PREVIEW</span></div>
-        <article class="profile-card" id="profile-preview" aria-label="Pratinjau profil karyawan">
-          <div class="card-top"><img src="assets/logo-web.png" alt="First Media" width="85" height="39"><span class="card-category">EMPLOYEE IDENTITY</span></div>
-          <div class="card-person"><img data-profile-photo src="assets/avatar.svg" alt="Foto profil" width="78" height="78"><div><p class="card-label">KARTU IDENTITAS DIGITAL</p><h3 data-bind="name">Nama karyawan</h3><p data-bind="role">Jabatan</p></div></div>
-          <div class="card-data"><div><span>Nomor Induk Karyawan (NIK)</span><strong data-bind="employeeId">—</strong></div><div><span>Departemen / Divisi</span><strong data-bind="department">—</strong></div><div><span>Wilayah Penugasan</span><strong data-bind="area">—</strong></div><div><span>Masa Berlaku Kartu</span><strong data-bind="expiry">—</strong></div></div>
-          <div class="card-bottom"><span>FIRST MEDIA • PT LINK NET TBK</span><svg class="icon"><use href="assets/icons.svg#signal"/></svg></div>
-        </article>
-        <section class="qr-panel" aria-labelledby="qr-title">
-          <div class="qr-panel-title"><div><p class="section-kicker">SCAN & CONNECT</p><h3 id="qr-title">QR Code karyawan</h3></div><span class="file-badge">PNG <span>2048 × 2048 px</span></span></div>
-          <fieldset class="qr-mode"><legend>Jenis QR Code</legend><label><input type="radio" name="qr-mode" value="direct" checked><span>Langsung<small>Dengan foto mini opsional</small></span></label><label><input type="radio" name="qr-mode" value="compact"><span>Ringkas<small>Data lengkap tanpa foto</small></span></label></fieldset>
-          <div class="qr-display"><canvas id="qr-canvas" width="320" height="320" role="img" aria-label="QR Code menuju profil karyawan"></canvas><div id="qr-placeholder" hidden>Lengkapi informasi karyawan untuk menampilkan QR Code.</div></div>
-          <p id="qr-status" role="status" aria-live="polite">Menyiapkan QR Code…</p><p id="qr-metrics" class="qr-metrics"></p>
-          <button class="text-button qr-expand" id="expand-qr" type="button" disabled><svg class="icon"><use href="assets/icons.svg#external"/></svg>Perbesar untuk dipindai</button>
-          <div class="compact-help" id="compact-help" hidden><strong>Simpan dan langsung bagikan</strong><p>Semua data teks dibawa langsung dalam tautan QR. Foto tidak ditampilkan saat dipindai. Tidak perlu mengunggah file profil.</p></div>
-        </section>
-        <div class="preview-actions"><button class="button button-primary" id="download" type="button" disabled><svg class="icon"><use href="assets/icons.svg#download"/></svg>Unduh QR Code</button><a class="button button-preview" id="scan-link" href="template.html" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#external"/></svg>Lihat identitas karyawan</a></div>
-        <div class="scan-destination"><strong>Alamat yang dibawa QR</strong><code id="qr-destination">—</code></div>
-        <p class="local-hint" id="local-hint"></p>
-      </aside>
-    </div>
-    <div class="workflow-note"><svg class="icon"><use href="assets/icons.svg#qr"/></svg><p><strong>Informasi yang terhubung. Pengalaman yang lebih baik.</strong><span>Lengkapi profil · Ekspor QR Code · Bagikan koneksi</span></p><span class="workflow-label">SIMPLE. SMART. CONNECTED.</span></div>
+<body>
+  <main class="login-card">
+    <img src="assets/logo-web.png" alt="First Media" width="105" height="48">
+    <p class="section-kicker">EMPLOYEE IDENTITY</p>
+    <h1>Akses Generator</h1>
+    <p>Generator hanya tersedia untuk administrator. Masuk menggunakan akun GitHub Anda.</p>
+    <a class="button button-primary" href="https://employeeinformation-admin.qr-studio-enterprise.workers.dev/auth/github">Masuk dengan GitHub</a>
+    <small>Halaman hasil scan QR tetap dapat dibuka tanpa login.</small>
   </main>
-  <footer class="site-footer container"><p>FIRST MEDIA <span>Employee Identity · 2026</span></p><p>ALWAYS FIRST • PT LINK NET TBK</p></footer>
-  <dialog id="guide"><div class="dialog-heading"><h2>Panduan penggunaan</h2><button class="icon-button" id="close-guide" aria-label="Tutup panduan" type="button">×</button></div><ol><li>Lengkapi informasi karyawan. Foto bersifat opsional dan dioptimalkan secara otomatis.</li><li>Gunakan <strong>Langsung</strong> untuk data dengan foto mini opsional, atau <strong>Ringkas</strong> untuk seluruh data teks tanpa foto. Kedua mode dapat langsung diunduh dan dipindai tanpa mengunggah file per karyawan.</li><li>Klik <strong>Unduh QR Code</strong> untuk menyimpan PNG 2048 px. Gunakan <strong>Perbesar untuk dipindai</strong> saat memindai dari layar. Pratinjau hasil scan membuka data langsung.</li><li>Agar profil terbuka di HP lain, unggah proyek ke GitHub Pages atau isi alamat publik yang sudah aktif pada pengaturan tautan QR. Unduhan PNG dinonaktifkan untuk alamat file lokal dan localhost.</li></ol><p>Tautan berisi salinan data profil dan foto kecil. Periksa informasi dan bagikan melalui kanal yang sesuai.</p><p>Perubahan formulir menghasilkan QR baru. QR lama tetap berisi data sebelumnya. Unduh QR baru setelah mengedit profil. Data formulir tidak disimpan setelah halaman dimuat ulang.</p></dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-  <dialog id="qr-dialog" class="qr-dialog"><div class="dialog-heading"><h2>Pindai QR profil</h2><button class="icon-button" id="close-qr" aria-label="Tutup QR besar" type="button">×</button></div><canvas id="qr-large" width="640" height="640" role="img" aria-label="QR Code besar untuk dipindai"></canvas><p id="qr-large-note"></p></dialog>
 </body>
 </html>
