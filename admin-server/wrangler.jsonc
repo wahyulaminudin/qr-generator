@@ -1,0 +1,20 @@
+{
+  "name": "employeeinformation-admin",
+  "main": "../output/admin-deployment/worker.mjs",
+  "compatibility_date": "2026-11-24",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": "../output/admin-deployment/public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none"
+  },
+  "observability": { "enabled": false },
+  "vars": {
+    "APP_ORIGIN": "https://employeeinformation-admin.qr-studio-enterprise.workers.dev",
+    "GITHUB_CLIENT_ID": "Ov23li6kVJ0YIGGly8Ze",
+    "ADMIN_GITHUB_ID": "168415197",
+    "PUBLIC_PROFILE_BASE": "https://employeeinformation.github.io/"
+  }
+}

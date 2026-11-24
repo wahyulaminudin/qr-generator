@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b2445">
+  <title>Login Admin — Employee Identity</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css?v=5">
+  <style>
+    body{min-height:100vh;display:grid;place-items:center;padding:24px;background:#092542 url('assets/skyline.svg') center bottom/cover no-repeat}
+    .login-card{width:min(100%,440px);padding:36px;border-radius:16px;background:#fff;border:1px solid #dfe7f1;box-shadow:0 24px 80px #0003}
+    .login-card>img{width:105px;margin-bottom:26px}.login-card h1{font-size:30px}
+    .login-card>p{margin:16px 0;color:#687b93;line-height:1.7}.login-card .button{display:block;text-align:center;margin-top:24px}
+    .login-card small{display:block;margin-top:24px;color:#687b93;line-height:1.7}
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <img src="assets/logo-web.png" alt="First Media" width="105" height="48">
+    <p class="section-kicker">EMPLOYEE IDENTITY</p>
+    <h1>Akses Generator</h1>
+    <p>Generator hanya tersedia untuk administrator. Masuk menggunakan akun GitHub Anda.</p>
+    <a class="button button-primary" href="{{ADMIN_ORIGIN}}/auth/github">Masuk dengan GitHub</a>
+    <small>Halaman hasil scan QR tetap dapat dibuka tanpa login.</small>
+  </main>
+</body>
+</html>

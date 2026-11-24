@@ -2,9 +2,13 @@
 
 Aplikasi statis berbahasa Indonesia menggunakan HTML, CSS, dan JavaScript murni. Tidak memerlukan backend, database, build, akun, atau koneksi internet untuk menjalankan file lokal.
 
+Generator **online** kini memiliki backend login GitHub terpisah di Cloudflare Workers Free; tidak memakai database pegawai. Beranda publik berada di `https://employeeinformation.github.io/`, sedangkan formulir generator dikirim server hanya sesudah akun administrator lolos pemeriksaan. Halaman hasil scan dan format QR lama tetap dipertahankan. Lihat [panduan login dan publikasi](admin-server/README.md).
+
+GitHub Pages diterbitkan dari branch **`public-site`**, bukan `main`. Untuk mengedit halaman hasil scan langsung melalui GitHub, pilih branch `public-site` lalu ubah `template.html` atau `style.css`. Branch `main` tetap menyimpan sumber generator lokal dan backend; jangan mengubah sumber Pages ke `main` karena itu akan menampilkan formulir lokal secara publik.
+
 Generator identitas karyawan dengan tampilan enterprise, tema navy, aksen biru elektrik, logo yang disediakan pengguna, dan ilustrasi skyline. Formulir dimulai kosong; seluruh profil berasal dari data yang dimasukkan pembuatnya. Logo merupakan aset visual yang disediakan pengguna.
 
-Istilah enterprise merujuk pada tampilan dan alur antarmuka. Aplikasi statis ini tidak menyediakan akun, hak akses, validasi kepegawaian, tanda tangan digital, pencabutan profil terpusat, atau penyimpanan data di server. Tautan profil dapat dibaca dan dibuat ulang oleh siapa pun yang memilikinya. Gunakan sesuai kewenangan pengelolaan data organisasi Anda.
+Istilah enterprise merujuk pada tampilan dan alur antarmuka. Login online membatasi akses ke formulir generator, sedangkan pembaca QR tetap aplikasi statis. Aplikasi ini tidak menyediakan validasi kepegawaian, tanda tangan digital, pencabutan profil terpusat, atau penyimpanan data pegawai di server. Tautan profil dapat dibaca dan dibuat ulang oleh siapa pun yang memilikinya. Gunakan sesuai kewenangan pengelolaan data organisasi Anda.
 
 ## Menjalankan
 
@@ -28,6 +32,8 @@ node serve.cjs
 Buka `http://127.0.0.1:4173`. Server ini hanya alat pengembangan untuk menyajikan file statis; aplikasi tidak bergantung pada server ini dan tidak memproses atau menyimpan profil di server.
 
 ## GitHub Pages
+
+Langkah berikut untuk pemasangan statis awal/lokal. Pada situs yang login-nya sudah diaktifkan, gunakan branch `public-site` dan beranda masuk dari `admin-server/pages-login.html`; pertahankan pengaturan tersebut agar formulir generator tidak dibuka kembali ke publik.
 
 1. Unggah isi folder proyek ke repository GitHub, termasuk `assets`, `index.html`, `template.html`, `script.js`, `qr-tools.js`, `photo-tools.js`, `style.css`, dan `.nojekyll`. Pertahankan folder `profiles/` jika ada file profil lama yang sudah dibagikan. Folder `node_modules`, `tests`, serta `output` tidak diperlukan untuk hosting.
 2. Buka **Settings → Pages**, pilih **Deploy from a branch**, pilih branch utama dan folder **/(root)**, lalu simpan.

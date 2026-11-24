@@ -2,3 +2,9 @@ node_modules/
 output/
 .DS_Store
 Thumbs.db
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example
+.wrangler/
