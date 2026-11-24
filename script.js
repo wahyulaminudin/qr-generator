@@ -80,7 +80,8 @@
         const expired = profile.expiry < `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
         const expiryStatus = $('#expiry-status');
         if (expiryStatus) {
-          expiryStatus.textContent = expired ? 'Masa berlaku yang dicantumkan telah berakhir.' : 'Masa berlaku sesuai data yang diisikan.';
+          expiryStatus.textContent = expired ? 'Masa berlaku yang dicantumkan telah berakhir.' : '';
+          expiryStatus.hidden = !expired;
           expiryStatus.classList.toggle('expired', expired);
         }
       } catch {

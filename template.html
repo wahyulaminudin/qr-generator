@@ -10,7 +10,7 @@
   <title>Identitas Karyawan — First Media</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css?v=4">
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </head>
 <body data-page="profile" class="scan-page">
   <header class="site-header">
@@ -20,7 +20,7 @@
     </div>
   </header>
   <main class="scan-main">
-    <div class="scan-intro"><p class="eyebrow">ALWAYS FIRST • PT LINK NET TBK</p><h1>Informasi Identitas Karyawan</h1><p>Rincian identitas dan penugasan yang dibagikan melalui QR Code.</p></div>
+    <div class="scan-intro"><p class="eyebrow">ALWAYS FIRST • PT LINK NET TBK</p><h1>Informasi Identitas Karyawan</h1></div>
     <section id="scan-error" class="scan-error" role="alert" hidden>
       <div class="empty-state-icon"><svg class="icon"><use href="assets/icons.svg#qr"/></svg></div>
       <h2 id="scan-error-title">Data Identitas Tidak Ditemukan</h2>
@@ -37,9 +37,7 @@
         <div><svg class="icon"><use href="assets/icons.svg#pin"/></svg><div><span>Wilayah Penugasan</span><strong data-bind="area">—</strong></div></div>
         <div class="validity-row"><svg class="icon"><use href="assets/icons.svg#calendar"/></svg><div><span>Masa Berlaku Kartu</span><strong data-bind="expiry">—</strong><small id="expiry-status" role="status"></small></div></div>
       </div>
-      <div class="scan-card-footer"><span>FIRST MEDIA • PT LINK NET TBK</span><svg class="icon"><use href="assets/icons.svg#signal"/></svg></div>
     </article>
-    <p class="scan-footer">Informasi berasal dari isian pembuat profil.<br>Halaman ini tidak memverifikasi status kepegawaian.</p>
   </main>
 </body>
 </html>
