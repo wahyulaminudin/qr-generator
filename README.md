@@ -1,23 +1,23 @@
-# QR Studio — Employee Profile Workspace
+# First Media — Employee Identity
 
 Aplikasi statis berbahasa Indonesia menggunakan HTML, CSS, dan JavaScript murni. Tidak memerlukan backend, database, build, akun, atau koneksi internet untuk menjalankan file lokal.
 
-Workspace profil karyawan dengan tampilan enterprise, tema navy, aksen biru elektrik, logo yang disediakan pengguna, dan ilustrasi skyline. Formulir dimulai kosong; seluruh profil berasal dari data yang dimasukkan pembuatnya. Logo merupakan aset visual yang disediakan pengguna.
+Generator identitas karyawan dengan tampilan enterprise, tema navy, aksen biru elektrik, logo yang disediakan pengguna, dan ilustrasi skyline. Formulir dimulai kosong; seluruh profil berasal dari data yang dimasukkan pembuatnya. Logo merupakan aset visual yang disediakan pengguna.
 
 Istilah enterprise merujuk pada tampilan dan alur antarmuka. Aplikasi statis ini tidak menyediakan akun, hak akses, validasi kepegawaian, tanda tangan digital, pencabutan profil terpusat, atau penyimpanan data di server. Tautan profil dapat dibaca dan dibuat ulang oleh siapa pun yang memilikinya. Gunakan sesuai kewenangan pengelolaan data organisasi Anda.
 
 ## Menjalankan
 
-Buka `index.html` langsung di browser modern. Isi nama, Employee ID, jabatan, departemen, area, masa berlaku, serta foto opsional. Pratinjau dan QR berubah otomatis setelah data valid. Klik **Lihat halaman hasil scan** untuk memeriksa data dan foto pada `template.html`. Untuk mengunduh QR yang dapat dibuka HP lain, jalankan dari alamat publik atau isi **URL publik aplikasi** pada pengaturan tautan QR. Klik **Unduh QR Code** untuk menyimpan PNG hitam-putih 2048 × 2048 piksel. Tombol **Kosongkan formulir** menghapus isian dari workspace saat ini.
+Buka `index.html` langsung di browser modern. Isi nama karyawan, Nomor Induk Karyawan (NIK internal, bukan NIK KTP), jabatan, departemen/divisi, wilayah penugasan, masa berlaku kartu, serta foto opsional. Pratinjau dan QR berubah otomatis setelah data valid. Klik **Lihat identitas karyawan** untuk memeriksa data dan foto pada `template.html`. Untuk mengunduh QR yang dapat dibuka HP lain, jalankan dari alamat publik atau isi **URL publik aplikasi** pada pengaturan tautan QR. Klik **Unduh QR Code** untuk menyimpan PNG hitam-putih 2048 × 2048 piksel. Tombol **Kosongkan formulir** menghapus isian dari workspace saat ini.
 
 ## Memilih mode QR
 
 - **Langsung** (default): seluruh data dan foto mini dibawa dalam tautan QR. Foto otomatis diperkecil menjadi 8–80 px dengan batas 900 byte. Tidak perlu mengunggah file profil terpisah. Semakin banyak data, semakin rapat pola QR. Gunakan tombol **Perbesar untuk dipindai** atau PNG asli saat memindai QR berfoto.
-- **Ringkas**: semua data teks dibawa langsung dalam QR menuju `template.html#v3.<data>.`. Hasil scan menampilkan nama, Employee ID, jabatan, departemen, area, serta masa berlaku **tanpa foto dan tanpa avatar pengganti**. Cukup isi formulir, pilih Ringkas, lalu unduh QR. Tidak perlu mengunggah HTML, membuat file per karyawan, atau memakai database.
+- **Ringkas**: semua data teks dibawa langsung dalam QR menuju `template.html#v3.<data>.`. Hasil scan menampilkan nama karyawan, NIK internal, jabatan, departemen/divisi, wilayah penugasan, serta masa berlaku kartu **tanpa foto dan tanpa avatar pengganti**. Cukup isi formulir, pilih Ringkas, lalu unduh QR. Tidak perlu mengunggah HTML, membuat file per karyawan, atau memakai database.
 
 Unggahan JPG, PNG, dan WebP maksimal 5 MB diproses secara adaptif untuk mode Langsung. Foto yang sudah diunggah diabaikan pada mode Ringkas dan dapat dipakai kembali saat beralih ke mode Langsung. Pratinjau mengikuti hasil scan. Unggah foto dinonaktifkan selama mode Ringkas dipilih.
 
-**Lihat halaman hasil scan** membuka alamat yang persis sama dengan isi QR. Mode Ringkas baru tidak bergantung pada folder `profiles/`, sehingga tidak menghasilkan 404 karena file karyawan belum diunggah. QR Ringkas versi lama yang mengarah ke `/profiles/p-....html` perlu dibuat ulang jika file tersebut tidak pernah dipublikasikan. Data dari nama file lama tidak dapat dipulihkan. Tautan v1/v2 dan file profil lama yang sudah tersedia tetap didukung.
+**Lihat identitas karyawan** membuka alamat yang persis sama dengan isi QR. Mode Ringkas baru tidak bergantung pada folder `profiles/`, sehingga tidak menghasilkan 404 karena file karyawan belum diunggah. QR Ringkas versi lama yang mengarah ke `/profiles/p-....html` perlu dibuat ulang jika file tersebut tidak pernah dipublikasikan. Data dari nama file lama tidak dapat dipulihkan. Tautan v1/v2 dan file profil lama yang sudah tersedia tetap didukung.
 
 Jika ingin memakai server lokal dan Node.js sudah tersedia:
 
@@ -39,6 +39,10 @@ Jika membuat QR dari file lokal sebelum publikasi, buka **Pengaturan tautan QR**
 **QR yang mengandung alamat `file:`, `localhost`, atau `127.0.0.1` tidak membuka proyek di HP lain.** Aplikasi sekarang menonaktifkan unduhan PNG untuk tujuan lokal tersebut dan membuka pengaturan URL secara otomatis. Pratinjau lokal tetap tersedia. Untuk pemindaian antarperangkat gunakan alamat publik GitHub Pages, dan perangkat pemindai harus terhubung ke internet untuk membuka halaman. Alamat HTTP LAN juga dapat diisi jika server dapat diakses dari HP pada jaringan yang sama. Aplikasi memeriksa format URL, bukan ketersediaan hosting. Tidak diperlukan layanan QR pihak ketiga.
 
 ## Cara data dibawa
+
+Label pada formulir, pratinjau, dan hasil scan mengikuti susunan identitas karyawan: nama, Nomor Induk Karyawan (NIK), jabatan, departemen/divisi, wilayah penugasan, dan masa berlaku kartu. Nama atribut internal tetap `name`, `employeeId`, `role`, `department`, `area`, dan `expiry` agar QR yang sudah dibagikan tetap dapat dibaca. Branding dan susunan tampilan dapat diperbarui tanpa membuat ulang QR; perubahan isi data pegawai memerlukan QR baru.
+
+Saat mengedit `template.html`, pertahankan `data-page="profile"`, `data-bind`, `data-profile-photo`, serta elemen `scan-profile` dan `scan-error`. Keterangan `expiry-status` bersifat opsional; jika dihapus, data identitas tetap ditampilkan. Tanggal yang sudah lewat menampilkan keterangan berakhir dan tetap memperlihatkan data, bukan dianggap sebagai tautan rusak. Hindari label terverifikasi/resmi karena aplikasi ini tidak memeriksa data pada sistem perusahaan.
 
 - Data teks UTF-8 dikodekan sebagai Base64URL dalam fragment `template.html#v1.<data>.<foto>` untuk mode Langsung, atau `#v3.<data>.` untuk mode Ringkas tanpa foto. Format v2 lama tetap dapat dibuka.
 - Foto untuk mode Langsung di-crop persegi dan dikompres WebP maksimal 900 byte. Tautan v1 lama dengan foto hingga 1.050 byte dan v2 lama dengan foto hingga 24 KB tetap didukung. Mode Ringkas v3 tidak membawa foto serta menyembunyikan seluruh area foto pada hasil scan. Avatar netral hanya dipakai pada mode Langsung bila foto tidak diunggah.

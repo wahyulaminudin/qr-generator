@@ -1,4 +1,4 @@
-/* QR Studio: all profile data travels in the URL fragment, never to a database. */
+/* Employee Identity: all profile data travels in the URL fragment, never to a database. */
 (() => {
   'use strict';
   const EMPTY_PROFILE = Object.freeze({ name: '', employeeId: '', role: '', department: '', area: '', expiry: '', photo: '' });
@@ -78,8 +78,11 @@
         const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jakarta', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
         const dateParts = Object.fromEntries(today.map((part) => [part.type, part.value]));
         const expired = profile.expiry < `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
-        $('#expiry-status').textContent = expired ? 'Masa berlaku yang dicantumkan telah berakhir.' : 'Masa berlaku yang dicantumkan pembuat profil.';
-        $('#expiry-status').classList.toggle('expired', expired);
+        const expiryStatus = $('#expiry-status');
+        if (expiryStatus) {
+          expiryStatus.textContent = expired ? 'Masa berlaku yang dicantumkan telah berakhir.' : 'Masa berlaku sesuai data yang diisikan.';
+          expiryStatus.classList.toggle('expired', expired);
+        }
       } catch {
         $('#scan-profile').hidden = true;
         $('#scan-error').hidden = false;
@@ -227,7 +230,7 @@
       const link = document.createElement('a');
       link.href = url;
       const safeId = profileData().employeeId.replace(/[^a-z0-9_-]/gi, '-').slice(0, 32) || 'profile';
-      link.download = `QR-Profile-${safeId}.png`;
+      link.download = `QR-Karyawan-${safeId}.png`;
       document.body.append(link);
       link.click();
       link.remove();

@@ -3,46 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Profil karyawan digital yang dibagikan melalui QR Studio.">
+  <meta name="description" content="Informasi identitas karyawan First Media yang dibagikan melalui QR Code.">
   <meta name="theme-color" content="#0b2445">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
-  <title>QR Studio — Profil Karyawan</title>
+  <title>Identitas Karyawan — First Media</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=3">
-  <script src="script.js?v=3" defer></script>
+  <link rel="stylesheet" href="style.css?v=4">
+  <script src="script.js?v=4" defer></script>
 </head>
 <body data-page="profile" class="scan-page">
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="QR Studio, beranda"><img src="assets/logo-web.png" alt="First Media" width="105" height="48"><span class="brand-divider"></span><span>QR <strong>Studio</strong><small>EMPLOYEE PROFILE WORKSPACE</small></span></a>
-      <span class="workspace-badge"><svg class="icon"><use href="assets/icons.svg#person"/></svg>Profil karyawan</span>
+      <div class="brand" aria-label="First Media, identitas karyawan"><img src="assets/logo-web.png" alt="First Media" width="105" height="48"><span class="brand-divider"></span><span><strong>FIRST MEDIA</strong><small>EMPLOYEE IDENTITY</small></span></div>
+      <span class="workspace-badge"><svg class="icon"><use href="assets/icons.svg#person"/></svg>Identitas Karyawan</span>
     </div>
   </header>
   <main class="scan-main">
-    <div class="scan-intro"><p class="eyebrow">PEOPLE. NETWORK. CONNECTION.</p><h1>Profil karyawan</h1><p>Terhubung melalui satu profil digital.</p></div>
+    <div class="scan-intro"><p class="eyebrow">ALWAYS FIRST • PT LINK NET TBK</p><h1>Informasi Identitas Karyawan</h1><p>Rincian identitas dan penugasan yang dibagikan melalui QR Code.</p></div>
     <section id="scan-error" class="scan-error" role="alert" hidden>
       <div class="empty-state-icon"><svg class="icon"><use href="assets/icons.svg#qr"/></svg></div>
-      <h2 id="scan-error-title">Tautan profil tidak valid</h2>
-      <p id="scan-error-message">Data profil tidak tersedia. Buka tautan QR Code yang dibagikan kepada Anda.</p>
-      <a class="button button-primary" href="index.html">Buka QR Studio</a>
+      <h2 id="scan-error-title">Data Identitas Tidak Ditemukan</h2>
+      <p id="scan-error-message">Data QR tidak tersedia. Minta tautan profil yang lengkap kepada pengirim.</p>
     </section>
     <article id="scan-profile" class="scan-card" hidden>
-      <div class="scan-card-banner"><span class="card-category">EMPLOYEE PROFILE</span><img src="assets/skyline.svg" alt="" width="720" height="280"></div>
-      <div class="scan-person"><img data-profile-photo src="assets/avatar.svg" alt="Foto profil" width="104" height="104"><p class="section-kicker">DIGITAL PROFILE</p><h2 data-bind="name">Nama karyawan</h2><p data-bind="role">Jabatan</p><span class="scan-id" data-bind="employeeId">—</span></div>
-      <div class="scan-section-heading">Informasi karyawan</div>
+      <div class="scan-card-banner"><span class="card-category">EMPLOYEE IDENTITY</span><img src="assets/skyline.svg" alt="" width="720" height="280"></div>
+      <div class="scan-person"><img data-profile-photo src="assets/avatar.svg" alt="Foto profil karyawan" width="104" height="104"><p class="section-kicker">KARTU IDENTITAS DIGITAL</p><h2 data-bind="name">Nama Karyawan</h2><p data-bind="role">Jabatan</p><span class="scan-id" data-bind="employeeId">—</span></div>
+      <div class="scan-section-heading">Rincian Kepegawaian</div>
       <div class="scan-details">
-        <div><svg class="icon"><use href="assets/icons.svg#person"/></svg><div><span>Employee ID</span><strong data-bind="employeeId">—</strong></div></div>
+        <div><svg class="icon"><use href="assets/icons.svg#person"/></svg><div><span>Nomor Induk Karyawan (NIK)</span><strong data-bind="employeeId">—</strong></div></div>
         <div><svg class="icon"><use href="assets/icons.svg#signal"/></svg><div><span>Jabatan</span><strong data-bind="role">—</strong></div></div>
-        <div><svg class="icon"><use href="assets/icons.svg#link"/></svg><div><span>Departemen</span><strong data-bind="department">—</strong></div></div>
-        <div><svg class="icon"><use href="assets/icons.svg#pin"/></svg><div><span>Area penugasan</span><strong data-bind="area">—</strong></div></div>
-        <div class="validity-row"><svg class="icon"><use href="assets/icons.svg#calendar"/></svg><div><span>Masa berlaku hingga</span><strong data-bind="expiry">—</strong><small id="expiry-status"></small></div></div>
+        <div><svg class="icon"><use href="assets/icons.svg#link"/></svg><div><span>Departemen / Divisi</span><strong data-bind="department">—</strong></div></div>
+        <div><svg class="icon"><use href="assets/icons.svg#pin"/></svg><div><span>Wilayah Penugasan</span><strong data-bind="area">—</strong></div></div>
+        <div class="validity-row"><svg class="icon"><use href="assets/icons.svg#calendar"/></svg><div><span>Masa Berlaku Kartu</span><strong data-bind="expiry">—</strong><small id="expiry-status" role="status"></small></div></div>
       </div>
-      <div class="profile-source"><svg class="icon"><use href="assets/icons.svg#info"/></svg><p><strong>Informasi profil</strong>Ditampilkan berdasarkan data yang dibagikan oleh pembuat profil.</p></div>
-      <div class="scan-card-footer"><span>QR STUDIO</span><svg class="icon"><use href="assets/icons.svg#signal"/></svg></div>
+      <div class="scan-card-footer"><span>FIRST MEDIA • PT LINK NET TBK</span><svg class="icon"><use href="assets/icons.svg#signal"/></svg></div>
     </article>
-    <a class="scan-back" href="index.html"><svg class="icon"><use href="assets/icons.svg#qr"/></svg>Buka QR Studio</a>
-    <p class="scan-footer">Employee Profile Workspace<br>© 2026 QR Studio</p>
+    <p class="scan-footer">Informasi berasal dari isian pembuat profil.<br>Halaman ini tidak memverifikasi status kepegawaian.</p>
   </main>
 </body>
 </html>

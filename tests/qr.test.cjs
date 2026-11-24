@@ -80,7 +80,7 @@ function app(page, hash = '', href = 'https://example.github.io/qr/index.html', 
   nodes.set('#qr-canvas', Object.assign(raster(), node('#qr-canvas')));
   const bound = keys.map((key) => ({ dataset: { bind: key }, textContent: '' }));
   const photo = [{ src: '' }];
-  const document = { body: { dataset: { page } }, querySelector: node, createElement: () => ({}), querySelectorAll(s) { return s === '[data-bind]' ? bound : s === '[data-profile-photo]' ? photo : []; } };
+  const document = { body: { dataset: { page } }, querySelector: (s) => options.withoutExpiryStatus && s === '#expiry-status' ? null : node(s), createElement: () => ({}), querySelectorAll(s) { return s === '[data-bind]' ? bound : s === '[data-profile-photo]' ? photo : []; } };
   const window = { location: { href, hash }, devicePixelRatio: 1, addEventListener() {} };
   const Image = class { set src(value) { this.onload(); } };
   const context = vm.createContext({ document, window, TextEncoder, TextDecoder, URL, Intl, Date, console, Uint8Array, Image, PhotoTools: options.photoResult ? { preparePhoto: () => options.photoResult } : PhotoTools, btoa: (s) => Buffer.from(s, 'binary').toString('base64'), atob: (s) => Buffer.from(s, 'base64').toString('binary'), qrcode, QRTools: require('../qr-tools.js'), setTimeout: () => 1, clearTimeout() {} });
@@ -183,4 +183,13 @@ test('missing profile and cleared form cannot leave a fabricated profile or old 
   assert.equal(generator.node('#employeeId').value, '');
   assert.equal(generator.node('#download').disabled, true);
   assert.equal(generator.node('#scan-link').href, undefined);
+});
+test('removing the optional expiry caption from a custom template does not hide a valid employee', () => {
+  for (const version of ['v1', 'v2', 'v3']) {
+    const hash = `#${version}.${Buffer.from(JSON.stringify(values)).toString('base64url')}.`;
+    const scan = app('profile', hash, undefined, { withoutExpiryStatus: true });
+    assert.equal(scan.node('#scan-profile').hidden, false);
+    assert.equal(scan.node('#scan-error').hidden, true);
+    assert.deepEqual(scan.bound.slice(0, 5).map(node => node.textContent), values.slice(0, 5));
+  }
 });
