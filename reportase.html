@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#111216">
+  <title>Generator Profil Pers — Reportase Times</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="reportase.css?v=1"><link rel="stylesheet" href="generator-types.css?v=1">
+  <script src="assets/vendor/qrcode.js" defer></script><script src="qr-tools.js" defer></script><script src="photo-tools.js" defer></script><script src="reportase-tools.js?v=1" defer></script><script src="reportase.js?v=1" defer></script>
+</head>
+<body data-reportase-page="generator">
+  <a class="skip-link" href="#main">Langsung ke generator</a>
+  <header class="rt-header"><div class="rt-container rt-header-inner"><a href="reportase.html" aria-label="Reportase Times"><img class="rt-logo" src="assets/Logo%20Reportase%20Times%20Metalik.png" alt="Reportase Times — Trending dan Terpercaya" width="300" height="100"></a><nav aria-label="Navigasi utama"><a href="#main">Generator profil pers</a></nav></div></header>
+  <div class="rt-container generator-types" aria-label="Pilih jenis generator"><span>Jenis identitas</span><a href="index.html">First Media</a><a href="reportase.html" aria-current="page">Reportase Times</a></div>
+  <section class="rt-hero"><div class="rt-container"><p class="rt-kicker">REPORTASE TIMES / PRESS IDENTITY</p><h1>Identitas pers.<br><span>Satu scan, satu profil.</span></h1><p>Ruang khusus untuk profil redaksi dan tim liputan Reportase Times.</p><div class="rt-hero-rule"><span>EDITORIAL</span><span>REPORTING</span><span>JOURNALISM</span></div></div></section>
+  <main id="main" class="rt-container rt-workspace">
+    <div class="rt-section-title"><div><p class="rt-kicker">GENERATOR REPORTASE TIMES</p><h2>Buat profil pers</h2></div><p>Data diproses di perangkat Anda</p></div>
+    <div class="rt-grid">
+      <section class="rt-panel" aria-labelledby="form-title"><div class="rt-panel-heading"><h3 id="form-title">Identitas & redaksi</h3><span>PROFIL BARU</span></div>
+        <form id="rt-form">
+          <div class="rt-fields">
+            <label>Nama lengkap <span>*</span><input id="rt-name" name="name" maxlength="60" required autocomplete="off" placeholder="Nama yang ditampilkan pada profil"></label>
+            <label>Nomor pers / anggota <span>*</span><input id="rt-pressId" name="pressId" maxlength="32" required autocomplete="off" placeholder="Nomor internal redaksi"></label>
+            <label>Posisi redaksi <span>*</span><input id="rt-position" name="position" maxlength="60" required placeholder="Contoh: Reporter"></label>
+            <label>Desk / rubrik <span>*</span><input id="rt-desk" name="desk" maxlength="60" required placeholder="Contoh: Metropolitan"></label>
+            <label>Wilayah liputan <span>*</span><input id="rt-region" name="region" maxlength="60" required placeholder="Contoh: Jakarta"></label>
+            <label>Masa berlaku <span>*</span><input id="rt-expiry" name="expiry" type="date" min="2000-01-01" max="2100-12-31" required></label>
+            <label class="rt-wide">Email redaksi <small>Opsional</small><input id="rt-email" name="email" type="email" maxlength="100" placeholder="Kontak email yang boleh ditampilkan publik"></label>
+            <label class="rt-wide">Profil singkat <small>Opsional · maksimal 200 karakter</small><textarea id="rt-bio" name="bio" maxlength="200" rows="3" placeholder="Tuliskan fokus liputan atau peran di redaksi."></textarea></label>
+          </div>
+          <fieldset class="rt-mode"><legend>Foto pada hasil scan</legend><label><input type="radio" name="rt-mode" value="compact" checked> Tanpa foto <small>QR lebih ringkas</small></label><label><input type="radio" name="rt-mode" value="photo"> Dengan foto mini <small>Foto dioptimalkan untuk QR</small></label></fieldset>
+          <div id="rt-photo-section" hidden><label class="rt-file-label" for="rt-photo">Pilih foto profil <small>JPG, PNG, WebP · maksimal 5 MB</small></label><div class="rt-photo-actions"><input id="rt-photo" type="file" accept="image/jpeg,image/png,image/webp"><button id="rt-remove-photo" class="rt-text-button" type="button" hidden>Hapus foto</button></div><p id="rt-photo-note" class="rt-note" role="status">Foto bersifat opsional.</p></div>
+          <details class="rt-url-settings"><summary>Pengaturan alamat publik</summary><label>URL publik aplikasi<input id="base-url" type="url" placeholder="https://employeeinformation.github.io/"></label><p class="rt-note">Isi alamat website jika membuat QR dari file lokal.</p></details>
+          <p class="rt-privacy">Siapa pun yang memiliki QR atau tautan dapat melihat data profil. Gunakan informasi yang boleh dibagikan publik.</p>
+          <div class="rt-form-footer"><span>* Wajib diisi</span><button id="rt-reset" class="rt-text-button" type="button">Kosongkan formulir</button></div>
+        </form>
+      </section>
+      <aside class="rt-preview"><div class="rt-preview-title"><h3>Pratinjau profil</h3><span>LIVE PREVIEW</span></div>
+        <article class="rt-identity" aria-label="Pratinjau identitas pers"><div class="rt-identity-top"><img src="assets/Logo%20Reportase%20Times%20Metalik.png" alt="Reportase Times" width="300" height="100"><span>PRESS ID</span></div><div class="rt-person"><img data-rt-photo src="assets/avatar.svg" alt="Foto profil" width="88" height="88" hidden><p class="rt-kicker">PROFIL REDAKSI</p><h2 data-rt-bind="name">Nama lengkap</h2><p data-rt-bind="position">Posisi redaksi</p><span class="rt-id" data-rt-bind="pressId">Nomor pers</span></div><dl class="rt-preview-details"><div><dt>Desk / rubrik</dt><dd data-rt-bind="desk">—</dd></div><div><dt>Wilayah liputan</dt><dd data-rt-bind="region">—</dd></div><div><dt>Masa berlaku</dt><dd data-rt-bind="expiry">—</dd></div></dl><div class="rt-identity-bottom">REPORTASE TIMES <span>PRESS IDENTITY</span></div></article>
+        <section class="rt-panel rt-qr-panel" aria-labelledby="rt-qr-title"><div class="rt-qr-heading"><div><p class="rt-kicker">SCAN THE STORY</p><h3 id="rt-qr-title">QR Code profil pers</h3></div><span>PNG / 2048 PX</span></div><div class="rt-qr-display"><canvas id="rt-qr" width="320" height="320" role="img" aria-label="QR profil Reportase Times" hidden></canvas><p id="rt-placeholder">Lengkapi data untuk membuat QR Code.</p></div><p id="rt-status" class="rt-note" role="status" aria-live="polite">Lengkapi seluruh kolom wajib.</p><div class="rt-qr-palette" aria-label="Palet QR hitam, merah tua, dan putih"><i></i><i></i><i></i><span>Kontras tinggi · ruang putih terjaga</span></div><button id="rt-expand" class="rt-text-button" type="button" disabled>Perbesar QR Code</button></section>
+        <div class="rt-actions"><button id="rt-download" class="rt-button" type="button" disabled>Unduh QR PNG</button><a id="rt-scan-link" class="rt-button rt-button-outline" target="_blank" rel="noopener" aria-disabled="true">Lihat hasil scan</a></div>
+        <details class="rt-destination"><summary>Alamat yang dibawa QR</summary><code id="rt-destination">—</code></details>
+      </aside>
+    </div>
+  </main>
+  <footer class="rt-container rt-workspace-footer">REPORTASE TIMES <span>Digital Press Identity</span></footer>
+  <dialog id="rt-qr-dialog"><div class="rt-dialog-heading"><h2>Pindai profil pers</h2><button id="rt-close" class="rt-text-button" type="button" aria-label="Tutup QR besar">Tutup</button></div><canvas id="rt-qr-large" width="1024" height="1024" role="img" aria-label="QR profil pers ukuran besar"></canvas></dialog>
+</body></html>

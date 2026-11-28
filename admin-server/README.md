@@ -29,6 +29,17 @@ Jangan memasang tombol login palsu atau menggunakan localStorage sebagai bukti l
 
 ## Mengedit setelah aktivasi
 
+### Dua jenis generator
+
+- Setelah login, gunakan pilihan **First Media** dan **Reportase Times** di bagian atas halaman. `/generator` tetap membuka First Media; `/generator-reportase` membuka form pers. Keduanya memerlukan sesi GitHub administrator yang sama.
+- Sumber First Media tetap `index.html`, dengan pembaca publik `template.html` dan payload `v1/v2/v3` yang tidak berubah.
+- Sumber Reportase Times adalah `reportase.html`. Profil publiknya memakai `reportase-profile.html`, `reportase.css`, `reportase.js`, dan `reportase-tools.js`, dengan payload tersendiri `rt1`. Data mencakup nama, nomor pers, posisi, desk, wilayah, masa berlaku, email redaksi opsional, profil singkat opsional, dan foto mini opsional. Mode awal tanpa foto.
+- QR Reportase Times memakai modul hitam, penanda merah tua, latar putih, koreksi M, dan margin putih minimal empat modul. Jangan mengganti modul menjadi perak terang atau menaruh logo di atas kode karena dapat mengurangi keterbacaan.
+- File generator `reportase.html` hanya disisipkan ke Worker setelah sesi diperiksa. Jangan mengunggahnya ke `public-site`. Terbitkan hanya pembaca profil Reportase Times beserta aset dan skripnya ke GitHub Pages.
+- QR baru menuju alamat permanen `reportase-profile.html#rt1…`. Data dibawa oleh tautan; tidak ada database. QR sebelumnya menyimpan salinan data sebelumnya. Mengganti tipe generator tidak mengubah QR atau profil yang sudah dibagikan.
+
+### Sumber dan publikasi
+
 - Branch `main`: sumber proyek, generator lokal, pengujian, dan backend login. Perubahan generator perlu dibangun serta diterbitkan ulang ke Cloudflare.
 - Branch `public-site`: beranda login dan halaman hasil scan yang diterbitkan GitHub Pages. Untuk mengedit teks/tampilan hasil scan langsung di GitHub, pilih branch ini lalu edit `template.html` atau `style.css`.
 - Ketika memperbarui branch publik dari sumber, salin seluruh file profil lama beserta jalurnya. Pertahankan alamat `template.html`, versi pembaca payload, dan file `profiles/` yang sudah dibagikan. Jangan menyalin kembali `index.html` generator ke branch publik.

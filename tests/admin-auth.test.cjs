@@ -13,7 +13,7 @@ async function fixture({ userId = 168415197, tokenFails = false, tokenRedirects 
   const { createHandler } = await import(pathToFileURL(path.join(__dirname, '..', 'admin-server', 'auth.mjs')).href);
   let seconds = 100000;
   const calls = [];
-  const handler = createHandler({ generatorHTML: source, now: () => seconds, fetchGitHub: async (url, options) => {
+  const handler = createHandler({ generatorHTML: source, reportaseHTML: fs.readFileSync(path.join(__dirname, '..', 'reportase.html'), 'utf8'), now: () => seconds, fetchGitHub: async (url, options) => {
     calls.push({ url, options });
     assert.equal(options.redirect, 'manual', 'Cloudflare supports manual redirects; credentials must never follow another origin');
     if (url.endsWith('/access_token') && tokenRedirects) return Response.redirect('https://attacker.example/token', 302);
@@ -44,7 +44,10 @@ test('anonymous visitors cannot obtain generator HTML and incomplete configurati
   assert.equal(await protectedPage.text(), '');
   assert.equal((await f.send('/generator', {}, { ...env, SESSION_SECRET: '' })).status, 503);
   assert.equal((await f.send('https://attacker.example/generator')).status, 400);
-  for (const url of ['/generator.html', '/admin-server/auth.mjs', '/.env', '/output/admin-deployment/worker.mjs', '/private/index.html']) assert.equal((await f.send(url)).status, 404);
+  assert.equal((await f.send('/generator-reportase')).status, 303);
+  const publicLogo = await f.send('/assets/Logo%20Reportase%20Times%20Metalik.png', {}, { ...env, ASSETS: { fetch: () => new Response('public asset') } });
+  assert.equal(publicLogo.status, 200, 'logo filename with encoded spaces is a permitted public asset');
+  for (const url of ['/generator.html', '/reportase.html', '/admin-server/auth.mjs', '/.env', '/output/admin-deployment/worker.mjs', '/private/index.html']) assert.equal((await f.send(url)).status, 404);
 });
 test('GitHub OAuth binds state and PKCE; only the allowed immutable user ID receives a session', async () => {
   const f = await fixture();
@@ -65,6 +68,16 @@ test('GitHub OAuth binds state and PKCE; only the allowed immutable user ID rece
   assert.ok(!html.includes(env.GITHUB_CLIENT_SECRET));
   assert.ok(!html.includes(env.SESSION_SECRET));
   assert.ok(!html.includes('fixture-token'));
+  assert.match(html, /href="\/generator-reportase"/);
+  const pressPage = await f.send('/generator-reportase', { headers: { Cookie: session } });
+  const pressHTML = await pressPage.text();
+  assert.equal(pressPage.status, 200);
+  assert.match(pressHTML, /id="rt-form"/);
+  assert.match(pressHTML, /href="\/generator"/);
+  assert.match(pressHTML, /href="\/generator-reportase" aria-current="page"/);
+  assert.match(pressHTML, /id="base-url" value="https:\/\/employeeinformation.github.io\/"/);
+  assert.match(pressHTML, /name="csrf"/);
+  assert.equal(pressPage.headers.get('Cache-Control'), 'no-store, private');
   const tokenBody = Object.fromEntries(new URLSearchParams(f.calls[0].options.body));
   assert.equal(f.calls[0].options.headers['Content-Type'], 'application/x-www-form-urlencoded');
   assert.equal(f.calls[0].options.headers['User-Agent'], 'Employee-Identity-Admin');

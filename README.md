@@ -1,4 +1,6 @@
-# First Media — Employee Identity
+# Employee Identity — First Media & Reportase Times
+
+Setelah login, pilih **First Media** atau **Reportase Times** di bagian atas generator. Reportase Times memiliki form pers, desain hitam/perak/merah, QR berwarna dengan kontras tinggi, dan halaman hasil scan `reportase-profile.html` yang terpisah. QR First Media dan pembaca lamanya tetap tersedia. Panduan penerbitan kedua tipe ada pada [admin-server/README.md](admin-server/README.md).
 
 Aplikasi statis berbahasa Indonesia menggunakan HTML, CSS, dan JavaScript murni. Tidak memerlukan backend, database, build, akun, atau koneksi internet untuk menjalankan file lokal.
 

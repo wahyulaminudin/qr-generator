@@ -54,15 +54,15 @@ function configFrom(env) {
 function loginPage(message = '', enabled = true) {
   return `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Login Admin — Employee Identity</title><link rel="stylesheet" href="/style.css"><style>body{min-height:100vh;display:grid;place-items:center;padding:24px;background:#092542 url('/assets/skyline.svg') center bottom/cover no-repeat}.login-card{width:min(100%,440px);background:white;border:1px solid #dfe7f1;border-radius:16px;padding:36px;box-shadow:0 24px 80px #0003}.login-card h1{font-size:30px}.login-card p{color:#687b93;font-size:15px;line-height:1.7;margin:16px 0}.login-card .button{display:block;text-align:center;margin-top:24px}.login-card .message{background:#f2f6fc;padding:14px;border-radius:8px;color:#244465}.login-card small{display:block;color:#687b93;line-height:1.7;margin-top:24px}</style></head><body><main class="login-card"><p class="section-kicker">EMPLOYEE IDENTITY</p><h1>Akses Generator</h1><p>Masuk dengan akun GitHub administrator untuk membuat QR Code karyawan.</p>${message ? `<p class="message" role="status">${escapeHTML(message)}</p>` : ''}${enabled ? '<a class="button button-primary" href="/auth/github">Masuk dengan GitHub</a>' : ''}<small>Gunakan akun GitHub Anda. Password hanya dimasukkan di github.com.<br>Halaman hasil scan tetap dapat dibuka tanpa login.</small></main></body></html>`;
 }
-export function createHandler({ generatorHTML, fetchGitHub = fetch, now = () => Math.floor(Date.now() / 1000), reportFailure = () => {} }) {
+export function createHandler({ generatorHTML, reportaseHTML = '', fetchGitHub = fetch, now = () => Math.floor(Date.now() / 1000), reportFailure = () => {} }) {
   return async function handle(request, env) {
     const url = new URL(request.url);
     const pathname = url.pathname;
     // Explicitly allow only public assets. Private source and HTML never fall through.
-    if (request.method === 'GET' && (/^\/assets\/[A-Za-z0-9_./ -]+$/.test(pathname) || ['/style.css', '/script.js', '/qr-tools.js', '/photo-tools.js'].includes(pathname))) {
+    if (request.method === 'GET' && (/^\/assets\/[A-Za-z0-9_./ -]+$/.test(pathname.replace(/%20/gi, ' ')) || ['/style.css', '/script.js', '/qr-tools.js', '/photo-tools.js', '/generator-types.css', '/reportase.css', '/reportase.js', '/reportase-tools.js'].includes(pathname))) {
       return env.ASSETS ? env.ASSETS.fetch(request) : response('Not found', 404);
     }
-    if (!['/', '/index.html', '/generator', '/auth/github', '/auth/callback', '/auth/logout'].includes(pathname)) return response('Not found', 404);
+    if (!['/', '/index.html', '/generator', '/generator-reportase', '/auth/github', '/auth/callback', '/auth/logout'].includes(pathname)) return response('Not found', 404);
     let config;
     try { config = configFrom(env); } catch { return response(loginPage('Login admin belum diaktifkan. Konfigurasi server harus diselesaikan terlebih dahulu.', false), 503); }
     if (url.origin !== config.origin) return response('Origin tidak diizinkan.', 400);
@@ -78,9 +78,11 @@ export function createHandler({ generatorHTML, fetchGitHub = fetch, now = () => 
       return response(null, 303, { Location: '/', 'Set-Cookie': cookie(SESSION_COOKIE, '', 0) });
     }
     if (request.method !== 'GET') return response('Method not allowed', 405, { Allow: 'GET' });
-    if (pathname === '/generator') {
+    if (pathname === '/generator' || pathname === '/generator-reportase') {
       if (!authorized) return response(null, 303, { Location: '/' });
-      const html = generatorHTML.replace('id="base-url"', `id="base-url" value="${escapeHTML(config.profileBase)}"`).replace('</nav>', `</nav><form action="/auth/logout" method="post" style="padding:0"><input type="hidden" name="csrf" value="${escapeHTML(session.csrf)}"><button class="text-button" type="submit">Keluar</button></form>`);
+      const source = pathname === '/generator-reportase' ? reportaseHTML : generatorHTML;
+      if (!source) return response('Not found', 404);
+      const html = source.replaceAll('href="reportase.html"', 'href="/generator-reportase"').replaceAll('href="index.html"', 'href="/generator"').replace('id="base-url"', `id="base-url" value="${escapeHTML(config.profileBase)}"`).replace('</nav>', `</nav><form action="/auth/logout" method="post" style="padding:0"><input type="hidden" name="csrf" value="${escapeHTML(session.csrf)}"><button class="text-button" type="submit">Keluar</button></form>`);
       return response(html);
     }
     if (pathname === '/' || pathname === '/index.html') {
